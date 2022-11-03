@@ -15,6 +15,11 @@ https://arxiv.org/pdf/2206.04769.pdf
 }
 ```
 
+## Request CLAP weights:
+```
+https://forms.office.com/r/ULb4k9GL1F
+```
+
 ## Usage
 
 ```python
