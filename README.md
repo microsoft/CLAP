@@ -20,21 +20,33 @@ https://arxiv.org/pdf/2206.04769.pdf
 https://forms.office.com/r/ULb4k9GL1F
 ```
 
-## Usage
+```
 
+### Usage
+- Load model
 ```python
 from CLAP_API import CLAP 
 
 clap_model = CLAP("<PATH TO WEIGHTS>", use_cuda=False)
 
-audio_files = ["audio_file1.wav", "audio_file2.wav"]
-class_labels = ["label1", "label2", "label3", "label4"]
+- Extract text embeddings
+```python
 
-# get audio embeddings for downstream applications 
-audio_embeddings = clap_model.get_audio_embeddings(audio_files)
+text_embeddings = clap_model.get_text_embeddings(class_labels: List[str])
+text_embeddings = text_embeddings/torch.norm(text_embeddings, dim=-1, keepdim=True)
+```
 
-# get text embeddings for downstream applications 
-text_embeddings = clap_model.get_text_embeddings(class_labels)
+- Extract audio embeddings
+```python
+
+audio_embeddings = clap_model.get_audio_embeddings(file_paths: List[str])
+audio_embeddings = audio_embeddings/torch.norm(audio_embeddings, dim=-1, keepdim=True)
+```
+
+- Compute similarity 
+```python
+# For using the below function, DO NOT normalize the text and audio embeddings
+sim = clap_model.compute_similarity(audio_embeddings, text_embeddings)
 ```
 
 ## Examples
@@ -136,26 +148,7 @@ The output:
 ESC50 Accuracy: 82.6%
 ```
 
-### Extract embeddings
-- Extract text embeddings
-```python
 
-text_embeddings = clap_model.get_text_embeddings(class_labels: List[str])
-text_embeddings = text_embeddings/torch.norm(text_embeddings, dim=-1, keepdim=True)
-```
-
-- Extract audio embeddings
-```python
-
-audio_embeddings = clap_model.get_audio_embeddings(file_paths: List[str])
-audio_embeddings = audio_embeddings/torch.norm(audio_embeddings, dim=-1, keepdim=True)
-```
-
-- Compute similarity 
-```python
-# For using the below function, DO NOT normalize the text and audio embeddings
-sim = clap_model.compute_similarity(audio_embeddings, text_embeddings)
-```
 
 
 
