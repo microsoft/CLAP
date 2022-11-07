@@ -20,7 +20,6 @@ https://arxiv.org/pdf/2206.04769.pdf
 https://forms.office.com/r/ULb4k9GL1F
 ```
 
-```
 
 ### Usage
 - Load model
@@ -28,19 +27,18 @@ https://forms.office.com/r/ULb4k9GL1F
 from CLAP_API import CLAP 
 
 clap_model = CLAP("<PATH TO WEIGHTS>", use_cuda=False)
+```
 
 - Extract text embeddings
 ```python
 
 text_embeddings = clap_model.get_text_embeddings(class_labels: List[str])
-text_embeddings = text_embeddings/torch.norm(text_embeddings, dim=-1, keepdim=True)
 ```
 
 - Extract audio embeddings
 ```python
 
 audio_embeddings = clap_model.get_audio_embeddings(file_paths: List[str])
-audio_embeddings = audio_embeddings/torch.norm(audio_embeddings, dim=-1, keepdim=True)
 ```
 
 - Compute similarity 
@@ -49,64 +47,7 @@ audio_embeddings = audio_embeddings/torch.norm(audio_embeddings, dim=-1, keepdim
 sim = clap_model.compute_similarity(audio_embeddings, text_embeddings)
 ```
 
-## Examples
-
-### Zero-Shot Prediction
-
-The code below performs zero-shot prediction using CLAP. This example takes an audio from the [ESC50 dataset](https://github.com/karolpiczak/ESC-50), and predicts the most likely labels among the 50 textual labels from the dataset.
-
-```python
-from CLAP_API import CLAP
-from esc50 import ESC50
-import time
-import torch.nn.functional as F
-
-# Load CLAP
-weights_path = # Add weight path here
-model = CLAP(weights_path, use_cuda=False)
-
-# Load dataset
-dataset = ESC50(root='data', download=False)
-x, target = dataset[1000]
-y = dataset.classes
-
-# Add prompt
-prompt = 'this is a sound of '
-y = dataset.classes
-y_queries = [prompt + x for x in y]
-
-# Compute embeddings and similarity matrix
-text_embeddings = model.get_text_embeddings(y)
-audio_embeddings = model.get_audio_embeddings(x, resample=True)
-similarity = model.compute_similarity(audio_embeddings, text_embeddings)
-similarity = F.softmax(similarity, dim=1)
-values, indices = similarity[0].topk(5)
-
-# Print the result
-print("Ground Truth: {}".format(target))
-print("Top predictions:\n")
-for value, index in zip(values, indices):
-    print(f"{y[index]:>16s}: {100 * value.item():.2f}%")
-```
-
-The output (the exact numbers may vary):
-
-```
-Ground Truth: coughing
-Top predictions:
-
-        coughing: 86.34%
-        sneezing: 9.30%
-drinking sipping: 1.31%
-        laughing: 1.20%
-  glass breaking: 0.81%
-```
-
-Note that this example uses the `get_text_embeddings()` and `get_audio_embeddings()` methods that return the encoded features of given inputs.
-
-### Zero-Shot Evaluation
-
-The code below performs zero-shot evaluation using CLAP to compute performance on [ESC50 dataset](https://github.com/karolpiczak/ESC-50) dataset.
+### Zero-Shot Classification of [ESC50 dataset](https://github.com/karolpiczak/ESC-50) 
 
 ```python
 from CLAP_API import CLAP
@@ -117,23 +58,24 @@ from tqdm import tqdm
 from sklearn.metrics import accuracy_score
 
 # Load CLAP
-weights_path = # Add weight path
+weights_path = # Add weight path here
 clap_model = CLAP(weights_path, use_cuda=False)
 
 # Load dataset
-dataset = ESC50(root='data', download=False)
+dataset = ESC50(root='path/ESC-50-master', download=False)
 prompt = 'this is a sound of '
 Y = [prompt + x for x in dataset.classes]
 
 # Computing text embeddings
 text_embeddings = clap_model.get_text_embeddings(Y)
+
 # Computing audio embeddings
 y_preds, y_labels = [], []
 for i in tqdm(range(len(dataset))):
     x, _, one_hot_target = dataset.__getitem__(i)
 
-    audio_embedding = clap_model.get_audio_embeddings([x], resample=True)
-    similarity = clap_model.compute_similarity(audio_embedding, text_embeddings)
+    audio_embeddings = clap_model.get_audio_embeddings([x], resample=True)
+    similarity = clap_model.compute_similarity(audio_embeddings, text_embeddings)
     y_pred = F.softmax(similarity.detach().cpu(), dim=1).numpy()
     y_preds.append(y_pred)
     y_labels.append(one_hot_target.detach().cpu().numpy())
@@ -147,10 +89,6 @@ The output:
 ```
 ESC50 Accuracy: 82.6%
 ```
-
-
-
-
 
 ## Contributing
 
