@@ -73,7 +73,6 @@ text_embeddings = clap_model.get_text_embeddings(Y)
 y_preds, y_labels = [], []
 for i in tqdm(range(len(dataset))):
     x, _, one_hot_target = dataset.__getitem__(i)
-
     audio_embeddings = clap_model.get_audio_embeddings([x], resample=True)
     similarity = clap_model.compute_similarity(audio_embeddings, text_embeddings)
     y_pred = F.softmax(similarity.detach().cpu(), dim=1).numpy()
