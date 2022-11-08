@@ -26,7 +26,7 @@ https://arxiv.org/pdf/2206.04769.pdf
 > pip install -r requirements.txt
 ```
 
-## CLAP weights:
+## CLAP weights
 Request CLAP weights by filling this form: [link](https://forms.office.com/r/ULb4k9GL1F)
 
 
