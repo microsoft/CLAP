@@ -30,7 +30,7 @@ https://arxiv.org/pdf/2206.04769.pdf
 Request CLAP weights by filling this form: [link](https://forms.office.com/r/ULb4k9GL1F)
 
 
-### Usage
+## Usage
 - Load model
 ```python
 from CLAP_API import CLAP 
