@@ -15,10 +15,8 @@ https://arxiv.org/pdf/2206.04769.pdf
 }
 ```
 
-## Request CLAP weights:
-```
-https://forms.office.com/r/ULb4k9GL1F
-```
+## CLAP weights:
+Request CLAP weights by filling this form: [link](https://forms.office.com/r/ULb4k9GL1F)
 
 
 ### Usage
@@ -31,27 +29,71 @@ clap_model = CLAP("<PATH TO WEIGHTS>", use_cuda=False)
 
 - Extract text embeddings
 ```python
-
 text_embeddings = clap_model.get_text_embeddings(class_labels: List[str])
 ```
 
 - Extract audio embeddings
 ```python
-
 audio_embeddings = clap_model.get_audio_embeddings(file_paths: List[str])
 ```
 
 - Compute similarity 
 ```python
-# For using the below function, DO NOT normalize the text and audio embeddings
 sim = clap_model.compute_similarity(audio_embeddings, text_embeddings)
+```
+
+### Zero-Shot inference on an audio file from [ESC50 dataset](https://github.com/karolpiczak/ESC-50)
+
+```python
+from CLAP_API import CLAP
+from esc50_dataset import ESC50
+import time
+import torch.nn.functional as F
+
+# Load CLAP
+weights_path = 'best.pth' # Add weight path here
+clap_model = CLAP(weights_path, use_cuda=False)
+
+# Load dataset
+dataset = ESC50(root='data', download=True) # set download=True when dataset is not downloaded
+audio_file, target, one_hot_target = dataset[1000]
+audio_file = [audio_file]
+prompt = 'this is a sound of '
+y = [prompt + x for x in dataset.classes]
+
+print('Computing text embeddings')
+text_embeddings = clap_model.get_text_embeddings(y)
+print('Computing audio embeddings')
+audio_embeddings = clap_model.get_audio_embeddings(audio_file, resample=True)
+similarity = clap_model.compute_similarity(audio_embeddings, text_embeddings)
+
+similarity = F.softmax(similarity, dim=1)
+values, indices = similarity[0].topk(5)
+# Print the result
+print("Ground Truth: {}".format(target))
+print("Top predictions:\n")
+for value, index in zip(values, indices):
+    print(f"{dataset.classes[index]:>16s}: {100 * value.item():.2f}%")
+```
+
+The output (the exact numbers may vary):
+
+```
+Ground Truth: coughing
+Top predictions:
+
+        coughing: 86.34%
+        sneezing: 9.30%
+drinking sipping: 1.31%
+        laughing: 1.20%
+  glass breaking: 0.81%
 ```
 
 ### Zero-Shot Classification of [ESC50 dataset](https://github.com/karolpiczak/ESC-50) 
 
 ```python
 from CLAP_API import CLAP
-from esc50 import ESC50
+from esc50_dataset import ESC50
 import torch.nn.functional as F
 import numpy as np
 from tqdm import tqdm
@@ -62,7 +104,7 @@ weights_path = # Add weight path here
 clap_model = CLAP(weights_path, use_cuda=False)
 
 # Load dataset
-dataset = ESC50(root='path/ESC-50-master', download=False)
+dataset = ESC50(root='data', download=False)
 prompt = 'this is a sound of '
 Y = [prompt + x for x in dataset.classes]
 
