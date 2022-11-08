@@ -27,7 +27,7 @@ https://arxiv.org/pdf/2206.04769.pdf
 ```
 
 ## CLAP weights:
-Request CLAP weights by filling this form: [link](https://forms.office.com/r/ULb4k9GL1F){:target="_blank"}
+Request CLAP weights by filling this form: [link](https://forms.office.com/r/ULb4k9GL1F)
 
 
 ### Usage
