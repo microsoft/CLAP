@@ -15,8 +15,19 @@ https://arxiv.org/pdf/2206.04769.pdf
 }
 ```
 
+## Setup
+- The setup assumes [Anaconda](https://www.anaconda.com) is installed
+- Open the anaconda terminal and follow the below commands. The symbol `{..}` indicates user input. 
+```shell
+> git clone https://github.com/microsoft/CLAP.git
+> cd CLAP
+> conda create -n clap python=3.8
+> conda activate clap
+> pip install -r requirements.txt
+```
+
 ## CLAP weights:
-Request CLAP weights by filling this form: [link](https://forms.office.com/r/ULb4k9GL1F)
+Request CLAP weights by filling this form: [link](https://forms.office.com/r/ULb4k9GL1F){:target="_blank"}
 
 
 ### Usage
