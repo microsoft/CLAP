@@ -12,7 +12,7 @@ import math
 import torchaudio.transforms as T
 import os
 import torch
-from importlib_resources import files, as_file
+from importlib_resources import files
 
 
 class CLAPWrapper():
