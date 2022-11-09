@@ -19,7 +19,7 @@ librosa==0.8.0
 llvmlite==0.36.0
 matplotlib==3.4.1
 numba==0.53.1
-numpy==1.20.2
+numpy==1.22.0
 packaging==20.9
 pandas==1.2.4
 pathtools==0.1.2
