@@ -28,7 +28,7 @@ Please take a look at `src/examples` for usage examples.
 
 - Load model
 ```python
-from CLAP_API import CLAP 
+from src import CLAP 
 
 clap_model = CLAP("<PATH TO WEIGHTS>", use_cuda=False)
 ```
