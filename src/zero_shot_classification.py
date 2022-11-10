@@ -3,7 +3,7 @@ This is an example using CLAP to perform zeroshot
     classification on ESC50 (https://github.com/karolpiczak/ESC-50).
 """
 
-from src.CLAPWrapper import CLAP
+from CLAPWrapper import CLAPWrapper
 from esc50_dataset import ESC50
 import torch.nn.functional as F
 import numpy as np
@@ -11,14 +11,14 @@ from tqdm import tqdm
 from sklearn.metrics import accuracy_score
 
 # Load dataset
-dataset = ESC50(root='data', download=False)
+dataset = ESC50(root="C:\\Users\\benjaminm\\Datasets", download=False)
 prompt = 'this is a sound of '
 y = [prompt + x for x in dataset.classes]
 
 
 # Load and initialize CLAP
-weights_path = '<insert your weights file path>'
-clap_model = CLAP(weights_path, use_cuda=False)
+weights_path = "C:\\Users\\benjaminm\\OneDrive - Microsoft\\CLAP_shared\\CLAP_models\\best.pth"
+clap_model = CLAPWrapper(weights_path, use_cuda=False)
 
 
 # Computing text embeddings

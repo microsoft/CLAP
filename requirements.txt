@@ -47,6 +47,7 @@ SoundFile==0.10.3.post1
 subprocess32==3.5.4
 threadpoolctl==2.1.0
 tokenizers==0.10.2
+--find-links https://download.pytorch.org/whl/torch_stable.html
 torch==1.8.1+cu111
 torchaudio==0.8.1
 torchlibrosa==0.0.9

@@ -6,8 +6,8 @@ import re
 import torch.nn.functional as F
 import numpy as np
 from transformers import AutoTokenizer
-from .models.utils import read_config_as_args
-from .models.clap import CLAP
+from models.utils import read_config_as_args
+from models.clap import CLAP
 import math
 import torchaudio.transforms as T
 import os
@@ -26,7 +26,7 @@ class CLAPWrapper():
         self.default_collate_err_msg_format = (
             "default_collate: batch must contain tensors, numpy arrays, numbers, "
             "dicts or lists; found {}")
-        self.config_as_str = files('CLAP_API.configs').joinpath('config.yml').read_text()
+        self.config_as_str = files('configs').joinpath('config.yml').read_text()
         self.model_fp = model_fp
         self.use_cuda = use_cuda
         self.clap, self.tokenizer, self.args = self.load_clap()
