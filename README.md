@@ -49,7 +49,7 @@ sim = clap_model.compute_similarity(audio_embeddings, text_embeddings)
 ```
 
 ## Examples
-To run zero-shot evaluation on ESC50 dataset or on a single audio file from ESC50 check `CLAP\src\`. For zero-shot evaluation on ESC50 dataset:
+To run zero-shot evaluation on the ESC50 dataset or a single audio file from ESC50, check `CLAP\src\`. For zero-shot evaluation on the ESC50 dataset:
 ```bash
 > cd src && python zero_shot_classification.py
 ```
