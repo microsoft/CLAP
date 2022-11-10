@@ -8,14 +8,14 @@ from esc50_dataset import ESC50
 import torch.nn.functional as F
 
 # Load ESC50 dataset
-dataset = ESC50(root="C:\\Users\\benjaminm\\Datasets", download=True) # set download=True when dataset is not downloaded
+dataset = ESC50(root="data_path", download=True) # set download=True when dataset is not downloaded
 audio_file, target, one_hot_target = dataset[1000]
 audio_file = [audio_file]
 prompt = 'this is a sound of '
 y = [prompt + x for x in dataset.classes]
 
 # Load and initialize CLAP
-weights_path = "C:\\Users\\benjaminm\\OneDrive - Microsoft\\CLAP_shared\\CLAP_models\\best.pth"
+weights_path = "weights_path"
 
 # Setting use_cuda = True will load the model on a GPU using CUDA
 clap_model = CLAPWrapper(weights_path, use_cuda=False)
