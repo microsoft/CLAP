@@ -19,7 +19,7 @@ pip install -r requirements.txt
 ```
 
 ## CLAP weights
-Request CLAP weights: [link](https://zenodo.org/record/7312125#.Y22vecvMIQ9)
+Request CLAP weights: [Pretrained Model \[Zenodo\]](https://zenodo.org/record/7312125#.Y22vecvMIQ9)
 
 
 ## Usage
