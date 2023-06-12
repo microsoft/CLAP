@@ -53,7 +53,7 @@ torchaudio==0.8.1
 torchlibrosa==0.0.9
 torchvision==0.9.1+cu111
 tqdm==4.60.0
-transformers==4.5.1
+transformers==4.30.0
 typing-extensions==3.10.0.0
 urllib3==1.26.5
 importlib-resources==5.10.0
