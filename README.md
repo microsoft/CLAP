@@ -4,6 +4,9 @@ CLAP (Contrastive Language-Audio Pretraining) is a neural network model that lea
 
 <img width="832" alt="clap_diagram_v3" src="https://user-images.githubusercontent.com/26778834/199842089-39ef6a2e-8abb-4338-bdfe-680abab70f53.png">
 
+## Updates
+- A new CLAP version [[paper]](https://arxiv.org/abs/2309.05767) trained on 4.6M pairs will be released here soon. 
+
 ## Setup
 
 You are required to just install the dependencies: `pip install -r requirements.txt` using Python 3 to get started.
@@ -19,7 +22,7 @@ pip install -r requirements.txt
 ```
 
 ## CLAP weights
-Request CLAP weights: [Pretrained Model \[Zenodo\]](https://zenodo.org/record/7312125#.Y22vecvMIQ9)
+Download CLAP weights: [Pretrained Model \[Zenodo\]](https://zenodo.org/record/7312125#.Y22vecvMIQ9)
 
 
 ## Usage
