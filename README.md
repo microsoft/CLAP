@@ -20,7 +20,7 @@ conda activate clap && \
 pip install -r requirements.txt
 ```
 
-## CLAP weights
+## NEW CLAP weights
 Download CLAP weights: versions _2022_, _2023_, and _clapcap_: [Pretrained Model \[Zenodo\]](https://zenodo.org/record/7312125#.Y22vecvMIQ9)
 
 _clapcap_ is the audio captioning model that uses the 2023 encoders.
