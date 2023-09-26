@@ -1,74 +1,99 @@
+###### [Overview](#CLAP) | [Setup](#Setup) | [CLAP weights](#CLAP-weights) | [Usage](#Usage) | [Examples](#Examples) | [Citation](#Citation)
+
 # CLAP
 
-CLAP (Contrastive Language-Audio Pretraining) is a neural network model that learns acoustic concepts from natural language supervision. It achieves SoTA in “Zero-Shot” classification, Audio-Text & Text-Audio Retrieval, and in some datasets when finetuned.
+CLAP (Contrastive Language-Audio Pretraining) is a model that learns acoustic concepts from natural language supervision and enables “Zero-Shot” inference. The model has been extensively evaluated in 26 audio downstream tasks achieving SoTA in several of them including classification, retrieval, and captioning.
 
-<img width="832" alt="clap_diagram_v3" src="https://user-images.githubusercontent.com/26778834/199842089-39ef6a2e-8abb-4338-bdfe-680abab70f53.png">
-
-## Updates
-- A new CLAP version [[paper]](https://arxiv.org/abs/2309.05767) trained on 4.6M pairs will be released here soon. 
+<img width="832" alt="clap_diagrams" src="https://github.com/bmartin1/CLAP/assets/26778834/c5340a09-cc0c-4e41-ad5a-61546eaa824c">
 
 ## Setup
 
-You are required to just install the dependencies: `pip install -r requirements.txt` using Python 3 to get started.
+Install the dependencies: `pip install -r requirements.txt` using Python 3 to get started.
 
 If you have [conda](https://www.anaconda.com) installed, you can run the following: 
 
 ```shell
 git clone https://github.com/microsoft/CLAP.git && \
 cd CLAP && \
-conda create -n clap python=3.8 && \
+conda create -n clap python=3.10 && \
 conda activate clap && \
 pip install -r requirements.txt
 ```
 
 ## CLAP weights
-Download CLAP weights: [Pretrained Model \[Zenodo\]](https://zenodo.org/record/7312125#.Y22vecvMIQ9)
+Download CLAP weights: versions _2022_, _2023_, and _clapcap_: [Pretrained Model \[Zenodo\]](https://zenodo.org/record/7312125#.Y22vecvMIQ9)
 
+_clapcap_ is the audio captioning model that uses the 2023 encoders.
 
 ## Usage
 
-Please take a look at `src/examples` for usage examples. 
-
-- Load model
+- Zero-Shot Classification and Retrieval
 ```python
+# Load model (Choose between versions '2022' or '2023')
 from src import CLAP 
 
-clap_model = CLAP("<PATH TO WEIGHTS>", use_cuda=False)
-```
+clap_model = CLAP("<PATH TO WEIGHTS>", version = '2023', use_cuda=False)
 
-- Extract text embeddings
-```python
+# Extract text embeddings
 text_embeddings = clap_model.get_text_embeddings(class_labels: List[str])
-```
 
-- Extract audio embeddings
-```python
+# Extract audio embeddings
 audio_embeddings = clap_model.get_audio_embeddings(file_paths: List[str])
+
+# Compute similarity between audio and text embeddings 
+similarities = clap_model.compute_similarity(audio_embeddings, text_embeddings)
 ```
 
-- Compute similarity 
+- Audio Captioning
 ```python
-sim = clap_model.compute_similarity(audio_embeddings, text_embeddings)
+# Load model (Choose version 'clapcap')
+from src import CLAP 
+
+clap_model = CLAP("<PATH TO WEIGHTS>", version = 'clapcap', use_cuda=False)
+
+# Generate audio captions
+captions = clap_model.generate_caption(file_paths: List[str])
 ```
 
 ## Examples
-To run zero-shot evaluation on the ESC50 dataset or a single audio file from ESC50, check `CLAP\src\`. For zero-shot evaluation on the ESC50 dataset:
+Take a look at `CLAP\src\` for usage examples. 
+
+To run Zero-Shot Classification on the ESC50 dataset try the following:
+
 ```bash
 > cd src && python zero_shot_classification.py
 ```
-Output
+Output (version 2023)
 ```bash
-ESC50 Accuracy: 82.6%
+ESC50 Accuracy: 93.9%
 ```
 
 ## Citation
-https://arxiv.org/pdf/2206.04769.pdf
+
+Kindly cite our work if you find it useful.
+
+[CLAP: Learning Audio Concepts from Natural Language Supervision](https://ieeexplore.ieee.org/abstract/document/10095889)
 ```
-@article{elizalde2022clap,
-  title={Clap: Learning audio concepts from natural language supervision},
-  author={Elizalde, Benjamin and Deshmukh, Soham and Ismail, Mahmoud Al and Wang, Huaming},
-  journal={arXiv preprint arXiv:2206.04769},
-  year={2022}
+@inproceedings{CLAP2022,
+  title={Clap learning audio concepts from natural language supervision},
+  author={Elizalde, Benjamin and Deshmukh, Soham and Al Ismail, Mahmoud and Wang, Huaming},
+  booktitle={ICASSP 2023-2023 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)},
+  pages={1--5},
+  year={2023},
+  organization={IEEE}
+}
+```
+
+[Natural Language Supervision for General-Purpose Audio Representations](https://arxiv.org/abs/2309.05767)
+```
+@misc{CLAP2023,
+      title={Natural Language Supervision for General-Purpose Audio Representations}, 
+      author={Benjamin Elizalde and Soham Deshmukh and Huaming Wang},
+      year={2023},
+      eprint={2309.05767},
+      archivePrefix={arXiv},
+      primaryClass={cs.SD},
+      url={https://arxiv.org/abs/2309.05767}
 }
 ```
 
