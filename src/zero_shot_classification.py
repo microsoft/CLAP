@@ -1,5 +1,5 @@
 """
-This is an example using CLAP to perform zeroshot 
+This is an example using CLAP to perform zeroshot
     classification on ESC50 (https://github.com/karolpiczak/ESC-50).
 """
 
@@ -11,15 +11,14 @@ from tqdm import tqdm
 from sklearn.metrics import accuracy_score
 
 # Load dataset
-dataset = ESC50(root="data_path", download=False)
-prompt = 'this is a sound of '
+root_path = "root_path" # Folder with ESC-50-master/
+dataset = ESC50(root=root_path, download=True) #If download=False code assumes base_folder='ESC-50-master' in esc50_dataset.py
+prompt = 'this is the sound of '
 y = [prompt + x for x in dataset.classes]
-
 
 # Load and initialize CLAP
 weights_path = "weights_path"
-clap_model = CLAPWrapper(weights_path, use_cuda=False)
-
+clap_model = CLAPWrapper(weights_path, version = '2023', use_cuda=False)
 
 # Computing text embeddings
 text_embeddings = clap_model.get_text_embeddings(y)
@@ -34,6 +33,7 @@ for i in tqdm(range(len(dataset))):
     y_preds.append(y_pred)
     y_labels.append(one_hot_target.detach().cpu().numpy())
 
+
 y_labels, y_preds = np.concatenate(y_labels, axis=0), np.concatenate(y_preds, axis=0)
 acc = accuracy_score(np.argmax(y_labels, axis=1), np.argmax(y_preds, axis=1))
 print('ESC50 Accuracy {}'.format(acc))
@@ -41,6 +41,6 @@ print('ESC50 Accuracy {}'.format(acc))
 """
 The output:
 
-ESC50 Accuracy: 82.6%
+ESC50 Accuracy: 93.9%
 
 """

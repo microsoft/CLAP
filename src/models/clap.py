@@ -42,14 +42,33 @@ class AudioEncoder(nn.Module):
 class TextEncoder(nn.Module):
     def __init__(self, d_out: int, text_model: str, transformer_embed_dim: int) -> None:
         super().__init__()
+        self.text_model = text_model
         self.base = AutoModel.from_pretrained(text_model)
+
+        if 'clip' in text_model:
+            self.clip_text_projection = self.base.text_projection
+            self.base = self.base.text_model
+            if 'base' in text_model:
+                transformer_embed_dim = 512
         
         self.projection = Projection(transformer_embed_dim, d_out)
 
     def forward(self, x):
-        out = self.base(**x)[0]
-        out = out[:, 0, :]  # get CLS token output
+        if 'clip' in self.text_model:
+            pooled_output = self.base(**x)[1] # get pooled output
+            out = self.clip_text_projection(pooled_output)  # get CLS token output
+        elif 'gpt' in self.text_model:
+            batch_size = x['input_ids'].shape[0]
+            hidden_states = self.base(**x)[0] # (batch_size=4, seq_len, 768)
+
+            sequence_lengths = torch.ne(x['input_ids'], 0).sum(-1) - 1 # tensor([13, 14, 18, 17])
+            out = hidden_states[torch.arange(batch_size, device=hidden_states.device), sequence_lengths] # [batch_size, 768] = [4, 768]
+        else:
+            out = self.base(**x)[0]
+            out = out[:, 0, :]  # get CLS token output
+        
         projected_vec = self.projection(out)
+
         return projected_vec
 
 class CLAP(nn.Module):
