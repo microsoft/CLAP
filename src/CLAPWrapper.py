@@ -202,21 +202,21 @@ class CLAPWrapper():
 
         raise TypeError(self.default_collate_err_msg_format.format(elem_type))
     
-    def read_audio(self, audio_path, resample=False):
+    def read_audio(self, audio_path, resample=True):
         r"""Loads audio file or array and returns a torch tensor"""
         # Randomly sample a segment of audio_duration from the clip or pad to match duration
         audio_time_series, sample_rate = torchaudio.load(audio_path)
         
         resample_rate = self.args.sampling_rate
-        if resample:
+        if resample and resample_rate != sample_rate:
             resampler = T.Resample(sample_rate, resample_rate)
             audio_time_series = resampler(audio_time_series)
-        return audio_time_series, sample_rate
+        return audio_time_series, resample_rate
 
     def load_audio_into_tensor(self, audio_path, audio_duration, resample=False):
         r"""Loads audio file and returns raw audio."""
         # Randomly sample a segment of audio_duration from the clip or pad to match duration
-        audio_time_series, sample_rate = self.read_audio(audio_path, resample=False)
+        audio_time_series, sample_rate = self.read_audio(audio_path, resample=resample)
         audio_time_series = audio_time_series.reshape(-1)
 
         # audio_time_series is shorter than predefined audio duration,
@@ -266,7 +266,7 @@ class CLAPWrapper():
         preprocessed_text = self.preprocess_text(class_labels)
         return self._get_text_embeddings(preprocessed_text)
 
-    def get_audio_embeddings(self, audio_files, resample):
+    def get_audio_embeddings(self, audio_files, resample=True):
         r"""Load list of audio files and return a audio embeddings"""
         preprocessed_audio = self.preprocess_audio(audio_files, resample)
         return self._get_audio_embeddings(preprocessed_audio)
