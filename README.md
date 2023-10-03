@@ -27,10 +27,12 @@ _clapcap_ is the audio captioning model that uses the 2023 encoders.
 
 ## Usage
 
+In `CLAP\src\`:
+
 - Zero-Shot Classification and Retrieval
 ```python
 # Load model (Choose between versions '2022' or '2023')
-from src import CLAP 
+from CLAPWrapper import CLAPWrapper as CLAP 
 
 clap_model = CLAP("<PATH TO WEIGHTS>", version = '2023', use_cuda=False)
 
@@ -47,7 +49,7 @@ similarities = clap_model.compute_similarity(audio_embeddings, text_embeddings)
 - Audio Captioning
 ```python
 # Load model (Choose version 'clapcap')
-from src import CLAP 
+from CLAPWrapper import CLAPWrapper as CLAP 
 
 clap_model = CLAP("<PATH TO WEIGHTS>", version = 'clapcap', use_cuda=False)
 
