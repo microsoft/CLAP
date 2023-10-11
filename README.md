@@ -8,16 +8,10 @@ CLAP (Contrastive Language-Audio Pretraining) is a model that learns acoustic co
 
 ## Setup
 
-Install the dependencies: `pip install -r requirements.txt` using Python 3 to get started.
-
-If you have [conda](https://www.anaconda.com) installed, you can run the following: 
+First, install python 3.8 or higher (3.11 recommended). Then, install CLAP:
 
 ```shell
-git clone https://github.com/microsoft/CLAP.git && \
-cd CLAP && \
-conda create -n clap python=3.10 && \
-conda activate clap && \
-pip install -r requirements.txt
+pip install git+https://github.com/microsoft/CLAP.git
 ```
 
 ## NEW CLAP weights
@@ -31,9 +25,9 @@ In `CLAP\src\`:
 
 - Zero-Shot Classification and Retrieval
 ```python
-# Load model (Choose between versions '2022' or '2023')
-from CLAPWrapper import CLAPWrapper as CLAP 
+from msclap import CLAP
 
+# Load model (Choose between versions '2022' or '2023')
 clap_model = CLAP("<PATH TO WEIGHTS>", version = '2023', use_cuda=False)
 
 # Extract text embeddings
@@ -48,9 +42,9 @@ similarities = clap_model.compute_similarity(audio_embeddings, text_embeddings)
 
 - Audio Captioning
 ```python
-# Load model (Choose version 'clapcap')
-from CLAPWrapper import CLAPWrapper as CLAP 
+from msclap import CLAP
 
+# Load model (Choose version 'clapcap')
 clap_model = CLAP("<PATH TO WEIGHTS>", version = 'clapcap', use_cuda=False)
 
 # Generate audio captions
