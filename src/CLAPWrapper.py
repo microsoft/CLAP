@@ -2,7 +2,6 @@ import warnings
 warnings.filterwarnings("ignore")
 import random
 import torchaudio
-from torch._six import string_classes
 import collections
 import re
 import numpy as np
@@ -184,7 +183,7 @@ class CLAPWrapper():
             return torch.tensor(batch, dtype=torch.float64)
         elif isinstance(elem, int):
             return torch.tensor(batch)
-        elif isinstance(elem, string_classes):
+        elif isinstance(elem, str):
             return batch
         elif isinstance(elem, collections.abc.Mapping):
             return {key: self.default_collate([d[key] for d in batch]) for key in elem}
