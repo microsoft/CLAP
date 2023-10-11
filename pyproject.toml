@@ -5,6 +5,9 @@ description = "CLAP (Contrastive Language-Audio Pretraining) is a model that lea
 authors = ["Benjamin Elizalde and Soham Deshmukh and Huaming Wang"]
 license = "MIT"
 readme = "README.md"
+packages = [
+    { include = "msclap" },
+]
 
 [tool.poetry.dependencies]
 python = "^3.8"
