@@ -7,8 +7,8 @@ import collections
 import re
 import numpy as np
 from transformers import AutoTokenizer, logging
-from models.clap import CLAP
-from models.mapper import get_clapcap
+from .models.clap import CLAP
+from .models.mapper import get_clapcap
 import math
 import torchaudio.transforms as T
 import os

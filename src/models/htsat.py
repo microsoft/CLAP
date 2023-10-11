@@ -6,11 +6,8 @@
 # Swin Transformer for Computer Vision: https://arxiv.org/pdf/2103.14030.pdf
 
 
-import logging
-import pdb
 import math
 import random
-from numpy.core.fromnumeric import clip, reshape
 import torch
 import torch.nn as nn
 import torch.utils.checkpoint as checkpoint
@@ -19,15 +16,10 @@ from torchlibrosa.stft import Spectrogram, LogmelFilterBank
 from torchlibrosa.augmentation import SpecAugmentation
 
 from itertools import repeat
-from typing import List
-try:
-    from models.pytorch_utils import do_mixup, interpolate
-    import models.config as config
-except:
-    from CLAP_API.models.pytorch_utils import do_mixup, interpolate
-    from CLAP_API.models import config
 
-import torch.nn.functional as F
+from .pytorch_utils import do_mixup, interpolate
+from . import config
+
 import collections.abc
 import warnings
 
