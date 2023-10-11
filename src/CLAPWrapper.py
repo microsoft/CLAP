@@ -1,3 +1,4 @@
+from pathlib import Path
 import warnings
 warnings.filterwarnings("ignore")
 import random
@@ -12,7 +13,6 @@ import math
 import torchaudio.transforms as T
 import os
 import torch
-from importlib_resources import files
 import argparse
 import yaml
 import sys
@@ -41,7 +41,7 @@ class CLAPWrapper():
     
     def get_config_path(self, version):
         if version in self.supported_versions:
-            return files('configs').joinpath(f"config_{version}.yml").read_text()
+            return (Path(__file__).parent / f"configs/config_{version}.yml").read_text()
         else:
             raise ValueError(f"The specific version is not supported. The supported versions are {str(self.supported_versions)}")
     
