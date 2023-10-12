@@ -4,13 +4,17 @@
 
 CLAP (Contrastive Language-Audio Pretraining) is a model that learns acoustic concepts from natural language supervision and enables “Zero-Shot” inference. The model has been extensively evaluated in 26 audio downstream tasks achieving SoTA in several of them including classification, retrieval, and captioning.
 
-<img width="832" alt="clap_diagrams" src="./docs/diagram.png">
+<img width="832" alt="clap_diagrams" src="https://raw.githubusercontent.com/hykilpikonna/CLAP/main/docs/diagram.png">
 
 ## Setup
 
-First, install python 3.8 or higher (3.11 recommended). Then, install CLAP:
+First, install python 3.8 or higher (3.11 recommended). Then, install CLAP using either of the following:
 
 ```shell
+# Install pypi pacakge
+pip install msclap
+
+# Or Install latest (unstable) git source
 pip install git+https://github.com/microsoft/CLAP.git
 ```
 
@@ -52,7 +56,7 @@ captions = clap_model.generate_caption(file_paths: List[str])
 ```
 
 ## Examples
-Take a look at `CLAP\src\` for usage examples. 
+Take a look at [examples](./examples/) for usage examples. 
 
 To run Zero-Shot Classification on the ESC50 dataset try the following:
 
