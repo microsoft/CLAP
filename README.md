@@ -59,7 +59,7 @@ Take a look at [examples](./examples/) for usage examples.
 To run Zero-Shot Classification on the ESC50 dataset try the following:
 
 ```bash
-> cd src && python zero_shot_classification.py
+> cd examples && python zero_shot_classification.py
 ```
 Output (version 2023)
 ```bash
