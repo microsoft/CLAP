@@ -4,20 +4,18 @@
 
 CLAP (Contrastive Language-Audio Pretraining) is a model that learns acoustic concepts from natural language supervision and enables “Zero-Shot” inference. The model has been extensively evaluated in 26 audio downstream tasks achieving SoTA in several of them including classification, retrieval, and captioning.
 
-<img width="832" alt="clap_diagrams" src="https://github.com/bmartin1/CLAP/assets/26778834/c5340a09-cc0c-4e41-ad5a-61546eaa824c">
+<img width="832" alt="clap_diagrams" src="https://raw.githubusercontent.com/hykilpikonna/CLAP/main/docs/diagram.png">
 
 ## Setup
 
-Install the dependencies: `pip install -r requirements.txt` using Python 3 to get started.
-
-If you have [conda](https://www.anaconda.com) installed, you can run the following: 
+First, install python 3.8 or higher (3.11 recommended). Then, install CLAP using either of the following:
 
 ```shell
-git clone https://github.com/microsoft/CLAP.git && \
-cd CLAP && \
-conda create -n clap python=3.10 && \
-conda activate clap && \
-pip install -r requirements.txt
+# Install pypi pacakge
+pip install msclap
+
+# Or Install latest (unstable) git source
+pip install git+https://github.com/microsoft/CLAP.git
 ```
 
 ## NEW CLAP weights
@@ -31,9 +29,9 @@ In `CLAP\src\`:
 
 - Zero-Shot Classification and Retrieval
 ```python
-# Load model (Choose between versions '2022' or '2023')
-from CLAPWrapper import CLAPWrapper as CLAP 
+from msclap import CLAP
 
+# Load model (Choose between versions '2022' or '2023')
 clap_model = CLAP("<PATH TO WEIGHTS>", version = '2023', use_cuda=False)
 
 # Extract text embeddings
@@ -48,9 +46,9 @@ similarities = clap_model.compute_similarity(audio_embeddings, text_embeddings)
 
 - Audio Captioning
 ```python
-# Load model (Choose version 'clapcap')
-from CLAPWrapper import CLAPWrapper as CLAP 
+from msclap import CLAP
 
+# Load model (Choose version 'clapcap')
 clap_model = CLAP("<PATH TO WEIGHTS>", version = 'clapcap', use_cuda=False)
 
 # Generate audio captions
@@ -58,7 +56,7 @@ captions = clap_model.generate_caption(file_paths: List[str])
 ```
 
 ## Examples
-Take a look at `CLAP\src\` for usage examples. 
+Take a look at [examples](./examples/) for usage examples. 
 
 To run Zero-Shot Classification on the ESC50 dataset try the following:
 

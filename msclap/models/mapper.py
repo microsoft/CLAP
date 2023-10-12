@@ -2,10 +2,9 @@
 import torch
 import torch.nn as nn
 from torch.nn import functional as nnf
-from torch.utils.data import Dataset, DataLoader
 from enum import Enum
 from transformers import GPT2LMHeadModel
-from typing import Tuple, Optional, Union
+from typing import Tuple, Optional
 
 def get_clapcap(name: str):
     if name == "ClapCaption":

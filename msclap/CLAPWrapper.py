@@ -1,19 +1,18 @@
+from pathlib import Path
 import warnings
 warnings.filterwarnings("ignore")
 import random
 import torchaudio
-from torch._six import string_classes
 import collections
 import re
 import numpy as np
 from transformers import AutoTokenizer, logging
-from models.clap import CLAP
-from models.mapper import get_clapcap
+from .models.clap import CLAP
+from .models.mapper import get_clapcap
 import math
 import torchaudio.transforms as T
 import os
 import torch
-from importlib_resources import files
 import argparse
 import yaml
 import sys
@@ -42,7 +41,7 @@ class CLAPWrapper():
     
     def get_config_path(self, version):
         if version in self.supported_versions:
-            return files('configs').joinpath(f"config_{version}.yml").read_text()
+            return (Path(__file__).parent / f"configs/config_{version}.yml").read_text()
         else:
             raise ValueError(f"The specific version is not supported. The supported versions are {str(self.supported_versions)}")
     
@@ -99,7 +98,7 @@ class CLAPWrapper():
 
         # We unwrap the DDP model and save. If the model is not unwrapped and saved, then the model needs to unwrapped before `load_state_dict`: 
         # Reference link: https://discuss.pytorch.org/t/how-to-load-dataparallel-model-which-trained-using-multiple-gpus/146005
-        clap.load_state_dict(model_state_dict)
+        clap.load_state_dict(model_state_dict, strict=False)
 
         clap.eval()  # set clap in eval mode
         tokenizer = AutoTokenizer.from_pretrained(args.text_model)
@@ -184,7 +183,7 @@ class CLAPWrapper():
             return torch.tensor(batch, dtype=torch.float64)
         elif isinstance(elem, int):
             return torch.tensor(batch)
-        elif isinstance(elem, string_classes):
+        elif isinstance(elem, str):
             return batch
         elif isinstance(elem, collections.abc.Mapping):
             return {key: self.default_collate([d[key] for d in batch]) for key in elem}

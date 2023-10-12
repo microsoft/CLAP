@@ -1,7 +1,7 @@
 """
 This is an example using CLAP for zero-shot inference.
 """
-from CLAPWrapper import CLAPWrapper
+from msclap import CLAP
 import torch.nn.functional as F
 
 # Define classes for zero-shot
@@ -17,7 +17,7 @@ audio_files = ['audio_file']
 # Load and initialize CLAP
 weights_path = "weights_path"
 # Setting use_cuda = True will load the model on a GPU using CUDA
-clap_model = CLAPWrapper(weights_path, version = '2023', use_cuda=False)
+clap_model = CLAP(weights_path, version = '2023', use_cuda=False)
 
 # compute text embeddings from natural text
 text_embeddings = clap_model.get_text_embeddings(class_prompts)

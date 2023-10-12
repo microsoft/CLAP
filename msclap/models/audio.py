@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torchlibrosa.stft import Spectrogram, LogmelFilterBank
-from models.htsat import HTSATWrapper
+from .htsat import HTSATWrapper
 
 def get_audio_encoder(name: str):
     if name == "Cnn14":
