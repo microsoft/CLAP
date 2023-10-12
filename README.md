@@ -25,8 +25,6 @@ _clapcap_ is the audio captioning model that uses the 2023 encoders.
 
 ## Usage
 
-In `CLAP\src\`:
-
 - Zero-Shot Classification and Retrieval
 ```python
 from msclap import CLAP
