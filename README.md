@@ -4,7 +4,7 @@
 
 CLAP (Contrastive Language-Audio Pretraining) is a model that learns acoustic concepts from natural language supervision and enables “Zero-Shot” inference. The model has been extensively evaluated in 26 audio downstream tasks achieving SoTA in several of them including classification, retrieval, and captioning.
 
-<img width="832" alt="clap_diagrams" src="https://raw.githubusercontent.com/hykilpikonna/CLAP/main/docs/diagram.png">
+<img width="832" alt="clap_diagrams" src="docs/clap2_diagram.png">
 
 ## Setup
 
