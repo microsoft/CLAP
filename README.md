@@ -19,7 +19,7 @@ pip install git+https://github.com/microsoft/CLAP.git
 ```
 
 ## NEW CLAP weights
-Download CLAP weights: versions _2022_, _2023_, and _clapcap_: [Pretrained Model \[Zenodo\]](https://zenodo.org/record/8378278)
+Download CLAP weights: versions _2022_, _2023_, and _clapcap_: [Zenodo](https://zenodo.org/record/8378278) or [HuggingFace](https://huggingface.co/microsoft/msclap)
 
 _clapcap_ is the audio captioning model that uses the 2023 encoders.
 
