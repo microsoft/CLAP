@@ -18,11 +18,6 @@ pip install msclap
 pip install git+https://github.com/microsoft/CLAP.git
 ```
 
-## NEW CLAP weights
-Download CLAP weights: versions _2022_, _2023_, and _clapcap_: [Pretrained Model \[Zenodo\]](https://zenodo.org/record/8378278)
-
-_clapcap_ is the audio captioning model that uses the 2023 encoders.
-
 ## Usage
 
 In `CLAP\src\`:
@@ -32,7 +27,8 @@ In `CLAP\src\`:
 from msclap import CLAP
 
 # Load model (Choose between versions '2022' or '2023')
-clap_model = CLAP("<PATH TO WEIGHTS>", version = '2023', use_cuda=False)
+# The model weight will be downloaded automatically if `model_fp` is not specified
+clap_model = CLAP(version = '2023', use_cuda=False)
 
 # Extract text embeddings
 text_embeddings = clap_model.get_text_embeddings(class_labels: List[str])
@@ -49,7 +45,7 @@ similarities = clap_model.compute_similarity(audio_embeddings, text_embeddings)
 from msclap import CLAP
 
 # Load model (Choose version 'clapcap')
-clap_model = CLAP("<PATH TO WEIGHTS>", version = 'clapcap', use_cuda=False)
+clap_model = CLAP(version = 'clapcap', use_cuda=False)
 
 # Generate audio captions
 captions = clap_model.generate_caption(file_paths: List[str])
