@@ -15,9 +15,8 @@ class_prompts = [prompt + x for x in classes]
 audio_files = ['audio_file']
 
 # Load and initialize CLAP
-weights_path = "weights_path"
 # Setting use_cuda = True will load the model on a GPU using CUDA
-clap_model = CLAP(weights_path, version = '2023', use_cuda=False)
+clap_model = CLAP(version = '2023', use_cuda=False)
 
 # compute text embeddings from natural text
 text_embeddings = clap_model.get_text_embeddings(class_prompts)
