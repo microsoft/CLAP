@@ -4,8 +4,7 @@ This is an example using CLAPCAP for audio captioning.
 from msclap import CLAP
 
 # Load and initialize CLAP
-weights_path = "weights_path"
-clap_model = CLAP(weights_path, version = 'clapcap', use_cuda=False)
+clap_model = CLAP(version = 'clapcap', use_cuda=False)
 
 #Load audio files
 audio_files = ['audio_file']
