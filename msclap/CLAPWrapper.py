@@ -312,7 +312,7 @@ class CLAPWrapper():
             # batch size is bigger than available audio/text items
             if next_batch_idx >= args0_len:
                 inputs[0] = input_tmp[dataset_idx:]
-                return func(*tuple(inputs))
+                yield func(*tuple(inputs))
             else:
                 inputs[0] = input_tmp[dataset_idx:next_batch_idx]
                 yield func(*tuple(inputs))
