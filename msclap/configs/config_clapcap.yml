@@ -1,5 +1,5 @@
 # TEXT ENCODER CONFIG
-text_model: 'gpt2'
+text_model: 'openai-community/gpt2'
 transformer_embed_dim: 768
 freeze_text_encoder_weights: True
 
