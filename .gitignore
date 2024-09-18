@@ -351,3 +351,6 @@ MigrationBackup/
 dist/
 .DS_Store
 ._*
+
+venv/
+root_path/

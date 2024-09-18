@@ -1,6 +1,6 @@
 from torch.utils.data import Dataset
-from torchvision.datasets.utils import download_url
 from tqdm import tqdm
+from pathlib import Path
 import pandas as pd
 import os
 import torch.nn as nn
@@ -74,9 +74,29 @@ class ESC50(AudioDataset):
         return len(self.audio_paths)
 
     def download(self):
-        download_url(self.url, self.root, self.filename)
+        # Download file using requests
+        import requests
+        file = Path(self.root) / self.filename
+        if file.is_file():
+            return
+        
+        r = requests.get(self.url, stream=True)
 
-        # extract file
+        # To prevent partial downloads, download to a temp file first
+        tmp = file.with_suffix('.tmp')
+        tmp.parent.mkdir(parents=True, exist_ok=True)
+        with open(tmp, 'wb') as f:
+            pbar = tqdm(unit=" MB", bar_format=f'{file.name}: {{rate_noinv_fmt}}')
+
+            for chunk in r.iter_content(chunk_size=1024):
+                if chunk:
+                    pbar.update(len(chunk) / 1024 / 1024)
+                    f.write(chunk)
+                    
+        # move temp file to correct location
+        tmp.rename(file)
+        
+        # # extract file
         from zipfile import ZipFile
         with ZipFile(os.path.join(self.root, self.filename), 'r') as zip:
             zip.extractall(path=self.root)
